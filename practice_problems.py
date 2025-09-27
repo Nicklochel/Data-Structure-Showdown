@@ -13,8 +13,17 @@ Output: False
 """
 
 def has_duplicates(product_ids):
-    # Your implementation here
-    pass
+    seen = set()  # Using a set for O(1) average-case lookups
+    for pid in product_ids:
+        if pid in seen:
+            return True
+        seen.add(pid)
+    return False
+
+# Justification:
+# A set is the best choice here because it allows O(1) average insert and lookup time.
+# We only need to know if a value has been seen before, so the hash-based properties
+# of sets make this task efficient. Runtime is O(n), where n is the length of product_ids.
 
 
 """
@@ -30,16 +39,24 @@ task_queue.add_task("Code review")
 task_queue.remove_oldest_task() → "Email follow-up"
 """
 
+from collections import deque
+
 class TaskQueue:
     def __init__(self):
-        # Your initialization here
-        pass
+        self.queue = deque()  # Deque gives O(1) append and popleft
 
     def add_task(self, task):
-        pass
+        self.queue.append(task)
 
     def remove_oldest_task(self):
-        pass
+        if self.queue:
+            return self.queue.popleft()
+        return None
+
+# Justification:
+# A queue (implemented with deque) is ideal because tasks are processed in FIFO order.
+# Deque operations append() and popleft() both run in O(1) time, unlike lists where removing
+# from the front would cost O(n). This makes deque the efficient choice here.
 
 
 """
@@ -57,10 +74,14 @@ tracker.get_unique_count() → 2
 
 class UniqueTracker:
     def __init__(self):
-        pass
+        self.unique_values = set()  # Set automatically handles uniqueness
 
     def add(self, value):
-        pass
+        self.unique_values.add(value)
 
     def get_unique_count(self):
-        pass
+        return len(self.unique_values)
+
+# Justification:
+# A set is the best fit since it only stores unique elements and avoids duplicates automatically.
+# Insertions are O(1) average case, and getting the unique count is O(1) because len() is constant time.
